@@ -792,8 +792,6 @@ def generalList(title, countries, unit_name="Country", unit_plural="Countries",
         st.header(f"{unit_name} statistics")
         st.markdown(f"""\
             The reported number of active, recovered and deceased COVID-19 cases by {unit_name} """
-            f""" (currently only {', '.join(countries)}).  
-            """
             """  
             ℹ️ You can select countries and plot data as cummulative counts or new active cases per day. 
             """)
