@@ -555,7 +555,7 @@ def arabcountries():
     #st.error("⚠️ There is currently an issue in the datasource of JHU. Data for 03/13 is invalid and thus removed!")
 
     countries = ["Algeria", "Bahrain", "Egypt", "Iraq", "Jordan", "Kuwait",
-                "Lebanon", "Morocco", "Oman", "Qatar", "Saudi Arabia", "Somalia", 
+                "Lebanon", "Morocco", "Mauritania", "Oman", "Qatar", "Saudi Arabia", "Somalia", 
                 "Sudan", "Tunisia", "United Arab Emirates"]
 
     #get data
