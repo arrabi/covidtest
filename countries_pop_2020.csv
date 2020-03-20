@@ -16,7 +16,7 @@ Seychelles,0.09834
 Somalia,15.893219
 South Sudan,11.193729
 Uganda,45.741
-United Republic of Tanzania,59.734213
+Tanzania,59.734213
 Zambia,18.383956
 Zimbabwe,14.862927
 Angola,32.866268
@@ -24,7 +24,7 @@ Cameroon,26.545864
 Central African Republic,4.829764
 Chad,16.425859
 Congo,5.518092
-Democratic Republic of the Congo,89.561404
+Congo,89.561404
 Equatorial Guinea,1.402985
 Gabon,2.225728
 Sao Tome and Principe,0.219161
@@ -70,8 +70,8 @@ Lebanon,6.825442
 Oman,5.106622
 Qatar,2.88106
 Saudi Arabia,34.813867
-State of Palestine,5.101416
-Syrian Arab Republic,17.500657
+Palestine,5.101416
+Syria,17.500657
 Turkey,84.339067
 United Arab Emirates,9.8904
 Yemen,29.825968
@@ -92,15 +92,15 @@ Sri Lanka,21.41325
 China,1439.323774
 "China, Hong Kong SAR",7.496988
 "China, Macao SAR",0.649342
-"China, Taiwan Province of China",23.816775
-Dem. People's Republic of Korea,25.778815
+Taiwan,23.816775
+"Korea, North",25.778815
 Japan,126.476458
 Mongolia,3.278292
-Republic of Korea,51.269183
+"Korea, South",51.269183
 Brunei Darussalam,0.437483
 Cambodia,16.718971
 Indonesia,273.523621
-Lao People's Democratic Republic,7.275556
+Lao,7.275556
 Malaysia,32.365998
 Myanmar,54.409794
 Philippines,109.581085
@@ -111,7 +111,7 @@ Viet Nam,97.338583
 Anguilla,0.015002
 Antigua and Barbuda,0.097928
 Aruba,0.106766
-Bahamas,0.393248
+"Bahamas, The",0.393248
 Barbados,0.287371
 "Bonaire, Sint Eustatius and Saba",0.026221
 British Virgin Islands,0.030237
@@ -135,7 +135,7 @@ Saint Vincent and the Grenadines,0.110947
 Sint Maarten (Dutch part),0.042882
 Trinidad and Tobago,1.399491
 Turks and Caicos Islands,0.038718
-United States Virgin Islands,0.104423
+Virgin Islands,0.104423
 Belize,0.397621
 Costa Rica,5.094114
 El Salvador,6.486201
@@ -145,19 +145,19 @@ Mexico,128.932753
 Nicaragua,6.624554
 Panama,4.314768
 Argentina,45.195777
-Bolivia (Plurinational State of),11.673029
+Bolivia,11.673029
 Brazil,212.559409
 Chile,19.116209
 Colombia,50.882884
 Ecuador,17.64306
-Falkland Islands (Malvinas),0.003483
+Falkland Islands,0.003483
 French Guiana,0.298682
 Guyana,0.786559
 Paraguay,7.13253
 Peru,32.971846
 Suriname,0.586634
 Uruguay,3.473727
-Venezuela (Bolivarian Republic of),28.435943
+Venezuela,28.435943
 Australia,25.499881
 New Zealand,4.822233
 Fiji,0.896444
@@ -168,7 +168,7 @@ Vanuatu,0.30715
 Guam,0.168783
 Kiribati,0.119446
 Marshall Islands,0.059194
-Micronesia (Fed. States of),0.115021
+Micronesia,0.115021
 Nauru,0.010834
 Northern Mariana Islands,0.057557
 Palau,0.018092
@@ -233,7 +233,7 @@ Bermuda,0.062273
 Canada,37.742157
 Greenland,0.056772
 Saint Pierre and Miquelon,0.005795
-United States of America,331.002647
+US,331.002647
 California,39.512
 Texas,28.995
 Florida,21.477

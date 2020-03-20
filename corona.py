@@ -7,6 +7,12 @@ import os
 import numpy as np
  
 
+APP_LOG_FILE = f"eval_logger_{os.path.basename(__file__)}.log"
+def log(ss):
+    with open (file=APP_LOG_FILE, mode="a+") as f:
+        f.write(str(datetime.datetime.now()) + ": " + ss + "\n")
+
+
 # get countries populations from csv file, and cache it.
 # csv file obtained from UN: population.un.org/wpp/Download/Standard/CSV/
 @st.cache
@@ -25,9 +31,16 @@ def read_data():
     url_deaths = f"{BASEURL}/time_series_19-covid-Deaths.csv"
     url_recovered = f"{BASEURL}/time_series_19-covid-Recovered.csv"
 
-    confirmed = pd.read_csv(url_confirmed, index_col=0)
-    deaths = pd.read_csv(url_deaths, index_col=0)
-    recovered = pd.read_csv(url_recovered, index_col=0)
+    confirmed = pd.read_csv(url_confirmed)#, index_col=0)
+    deaths = pd.read_csv(url_deaths)#, index_col=0)
+    recovered = pd.read_csv(url_recovered)#, index_col=0)
+
+    #ignore where State/Province has ,, because that's city stats, and they shouldn't be added to country
+    #to avoid duplication.
+
+    confirmed = confirmed[~ confirmed['Province/State'].str.contains(",", na=False)]
+    deaths = deaths[~ deaths['Province/State'].str.contains(",", na=False)]
+    recovered = recovered[~ recovered['Province/State'].str.contains(",", na=False)]
 
     # sum over potentially duplicate rows (France and their territories)
     confirmed = confirmed.groupby("Country/Region").sum().reset_index()
@@ -125,16 +138,31 @@ def main():
     pages = {
         "Arab Region & Neighboring Countries": 1,
         "US States": 2,
-        "Europe": 3
+        "Europe": 3,
+        "World": 4
     }
     chosen = st.sidebar.radio("Select page", list(pages.keys()), index=0)
     chosen = pages[chosen]
     if chosen == 1:
-        arabcountries()
+#        arabcountries()
+        arab_countries = ["Algeria", "Bahrain", "Egypt", "Iraq", "Jordan", "Kuwait",
+            "Lebanon", "Morocco", "Mauritania", "Oman", "Qatar", "Saudi Arabia", "Somalia", 
+            "Sudan", "Tunisia", "United Arab Emirates", "Djibouti", "Comores", "Libya", "Palestine", 
+            "Syria", "Yemen", "Iran", "Turkey", "Greece", "Cypress", "Ethiopia", "Eritrea", "South Sudan",
+            "Chad", "Niger", "Mali", "Senegal", "Malta"]
+        generalList(title="Arab Region and Neighbors", countries=arab_countries)
     elif chosen == 2: 
         usstates()
     elif chosen == 3: 
-        europe()
+        eu_countries = ["Germany", "Austria", "Belgium", "Denmark", "France", "Greece", "Italy", \
+                 "Netherlands", "Norway", "Poland", "Romania", "Spain", "Sweden", \
+                 "Switzerland", "United Kingdom"]
+        generalList(title="Select EU countries", countries=eu_countries)
+#        europe()
+    elif chosen == 4:
+        confirmed, _, _ = read_data()
+        all_countries = list(confirmed['Country/Region'].unique()) 
+        generalList(title="World", countries=all_countries)
     else:
         st.write("not implemented yet")
 
@@ -193,6 +221,8 @@ def usstates():
             multiselection = st.multiselect("Select states:", states_list, default=states_list)
         else:
             multiselection = st.multiselect("Select states:", states_list, default=def_states_list)
+        log(f"US_multiselection {str(multiselection)}")
+
         logscale = st.checkbox("Log scale", True)
 
         confirmed = confirmed[confirmed["Province/State"].isin(multiselection)]
@@ -266,6 +296,7 @@ def usstates():
         selection = st.selectbox("Select state:", states_list)
         cummulative = st.radio("Display type:", ["total", "new cases"])
         #scaletransform = st.radio("Plot y-axis", ["linear", "pow"])
+        log(f"selection: {selection}, cummulative: {cummulative}")
         
         confirmed = confirmed[confirmed["Province/State"] == selection].iloc[:,3:]
         confirmed = transform(confirmed, collabel="confirmed")
@@ -633,6 +664,184 @@ def arabcountries():
         st.altair_chart(c, use_container_width=True)
         st.markdown(f"### Data for {selection}")
         st.write(df)
+
+
+
+def get_pop(country):
+    try:
+        return inhabitants[x['country']]
+    except:
+        log(f"Can't get pop of {country}, assuming 1m")
+        return 1
+
+def generalList(title, countries, unit_name="Country", unit_plural="Countries", 
+        column_name ="Country/Region", num_def_selected = 10):
+    st.markdown("""\
+        This app illustrates the spread of COVID-19 in Arab Region (where data is available) over time.
+    """)
+
+    #st.error("⚠️ There is currently an issue in the datasource of JHU. Data for 03/13 is invalid and thus removed!")
+
+    #get data
+    confirmed, deaths, recovered = read_data()
+
+    #keep only arab countries
+    confirmed = confirmed[confirmed[column_name].isin(countries)]
+    deaths = deaths[deaths[column_name].isin(countries)]
+    recovered = recovered[recovered[column_name].isin(countries)]
+
+    #keep only dates where there were confirmed cases
+    cols_to_remove = []
+    for c in confirmed.columns:
+        if c[0].isdigit():
+            if confirmed[c].sum() == 0:
+                cols_to_remove += [c]
+    confirmed = confirmed.drop(cols_to_remove, axis=1)
+    deaths = deaths.drop(cols_to_remove, axis=1)
+    recovered = recovered.drop(cols_to_remove, axis=1)
+
+    #list of countries 
+    countries = list(confirmed[column_name].unique()) 
+
+    #keep top 10 (num_def_selected) states by default 
+    sorted_conf = confirmed.sort_values(by=confirmed.columns[-1], ascending=False)
+    def_countries = list(sorted_conf.iloc[0:num_def_selected,0].unique()) 
+
+    analysis = st.sidebar.selectbox("Choose Analysis", ["Overview", f"By {unit_name}"])
+
+    if analysis == "Overview":
+
+        st.header(f"COVID-19 cases and fatality rate in {title}")
+        st.markdown(f"""\
+            These are the reported case numbers for a selection of {unit_plural}"""
+            """The case fatality rate (CFR) is calculated as:  
+            $$
+            CFR[\%] = \\frac{fatalities}{\\textit{all cases}}
+            $$"""
+            f"""
+            ℹ️ You can select/ deselect {unit_plural} and switch between linear and log scales.
+            """)
+
+        if len(countries) < 30 and st.checkbox("select all"):
+            multiselection = st.multiselect(f"Select {unit_plural}:", countries, default=countries)
+        else:
+            multiselection = st.multiselect(f"Select {unit_plural}:", countries, default=def_countries)
+        log(f"multiselection {str(multiselection)}")
+
+        logscale = st.checkbox("Log scale", True)
+
+        confirmed = confirmed[confirmed[column_name].isin(multiselection)]
+        confirmed = confirmed.drop(["Lat", "Long"],axis=1)
+        confirmed = transform2(confirmed, collabel="confirmed")
+
+        deaths = deaths[deaths[column_name].isin(multiselection)]
+        deaths = deaths.drop(["Lat", "Long"],axis=1)
+        deaths = transform2(deaths, collabel="deaths")
+
+        frate = confirmed[["country"]]
+        frate["frate"] = (deaths.deaths / confirmed.confirmed)*100
+
+        # saveguard for empty selection 
+        if len(multiselection) == 0:
+            return 
+
+        SCALE = alt.Scale(type='linear')
+        if logscale:
+            confirmed["confirmed"] += 0.00001
+
+            confirmed = confirmed[confirmed.index > '2020-02-16']
+            frate = frate[frate.index > '2020-02-16']
+            
+            SCALE = alt.Scale(type='log', domain=[10, int(max(confirmed.confirmed))], clamp=True)
+
+
+        c2 = alt.Chart(confirmed.reset_index()).properties(height=150).mark_line().encode(
+            x=alt.X("date:T", title="Date"),
+            y=alt.Y("confirmed:Q", title="Cases", scale=SCALE),
+            color=alt.Color('country:N', title="Country")
+        )
+
+        # case fatality rate...
+        c3 = alt.Chart(frate.reset_index()).properties(height=100).mark_line().encode(
+            x=alt.X("date:T", title="Date"),
+            y=alt.Y("frate:Q", title="Fatality rate [%]", scale=alt.Scale(type='linear')),
+            color=alt.Color('country:N', title="Country")
+        )
+
+        per100k = confirmed.loc[[confirmed.index.max()]].copy()
+        per100k.loc[:,'inhabitants'] = per100k.apply(lambda x: get_pop(x), axis=1)
+        per100k.loc[:,'per100k'] = per100k.confirmed / (per100k.inhabitants * 1_000_000) * 100_000
+        per100k = per100k.set_index("country")
+        per100k = per100k.sort_values(ascending=False, by='per100k')
+        per100k.loc[:,'per100k'] = per100k.per100k.round(2)
+
+        c4 = alt.Chart(per100k.reset_index()).properties(width=75).mark_bar().encode(
+            x=alt.X("per100k:Q", title="Cases per 100k inhabitants"),
+            y=alt.Y("country:N", title="Countries", sort=None),
+            color=alt.Color('country:N', title="Country"),
+            tooltip=[alt.Tooltip('country:N', title='Country'), 
+                     alt.Tooltip('per100k:Q', title='Cases per 100k'),
+                     alt.Tooltip('inhabitants:Q', title='Inhabitants [mio]')]
+        )
+
+        st.altair_chart(alt.hconcat(c4, alt.vconcat(c2, c3)), use_container_width=True)
+
+
+    elif analysis == f"By {unit_name}":        
+
+        st.header(f"{unit_name} statistics")
+        st.markdown(f"""\
+            The reported number of active, recovered and deceased COVID-19 cases by {unit_name} """
+            f""" (currently only {', '.join(countries)}).  
+            """
+            """  
+            ℹ️ You can select countries and plot data as cummulative counts or new active cases per day. 
+            """)
+
+        # selections
+        selection = st.selectbox(f"Select {unit_name}:", countries)
+        cummulative = st.radio("Display type:", ["total", "new cases"])
+        log(f"selection: {selection}, cummulative: {cummulative}")
+
+        #scaletransform = st.radio("Plot y-axis", ["linear", "pow"])
+        
+        confirmed = confirmed[confirmed[column_name] == selection].iloc[:,3:]
+        confirmed = transform(confirmed, collabel="confirmed")
+
+        deaths = deaths[deaths[column_name] == selection].iloc[:,3:]
+        deaths = transform(deaths, collabel="deaths")
+
+        recovered = recovered[recovered[column_name] == selection].iloc[:,3:]
+        recovered = transform(recovered, collabel="recovered")
+
+        variables = ["active", "deaths", "recovered"]
+
+        df = pd.concat([confirmed, deaths, recovered], axis=1)
+        df["active"] = df.confirmed - df.deaths - df.recovered
+
+
+        colors = ["orange", "purple", "gray"]
+
+        value_vars = variables
+        SCALE = alt.Scale(domain=variables, range=colors)
+        if cummulative == 'new cases':
+            value_vars = ['active']
+            df = df[value_vars]
+            df = df.diff()
+            df["active"][df.active < 0] = 0
+            SCALE = alt.Scale(domain=variables[0:1], range=colors[0:1]) 
+
+        dfm = pd.melt(df.reset_index(), id_vars=["date"], value_vars=value_vars)
+      
+        c = alt.Chart(dfm.reset_index()).properties(height=200, title=selection).mark_bar(size=10).encode(
+            x=alt.X("date:T", title="Date"),
+            y=alt.Y("value:Q", title="Cases", scale=alt.Scale(type='linear')),
+            color=alt.Color('variable:N', title="Category", scale=SCALE),
+        )
+        st.altair_chart(c, use_container_width=True)
+        st.markdown(f"### Data for {selection}")
+        st.write(df)
+
 
 
 if __name__ == "__main__":
