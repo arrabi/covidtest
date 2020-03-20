@@ -207,7 +207,7 @@ def main():
         st.sidebar.button("reload")
 
     pages = {
-        "Arab Region": 1,
+        "Arab Region + Few More": 1,
         "US States": 2,
         "Europe": 3
     }
@@ -557,7 +557,8 @@ def arabcountries():
     countries = ["Algeria", "Bahrain", "Egypt", "Iraq", "Jordan", "Kuwait",
                 "Lebanon", "Morocco", "Mauritania", "Oman", "Qatar", "Saudi Arabia", "Somalia", 
                 "Sudan", "Tunisia", "United Arab Emirates", "Djibouti", "Comores", "Libya", "Palestine", 
-                "Syria", "Yemen"]
+                "Syria", "Yemen", "Iran", "Turkey", "Greece", "Cypress", "Ethiopia", "Eritrea", "South Sudan",
+                "Chad", "Niger", "Mali", "Senegal", "Malta"]
 
     #get data
     confirmed, deaths, recovered = read_data()
