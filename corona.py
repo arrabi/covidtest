@@ -4,103 +4,19 @@ from streamlit import caching
 import pandas as pd
 import altair as alt
 import os
+import numpy as np
  
 
+# get countries populations from csv file, and cache it.
+# csv file obtained from UN: population.un.org/wpp/Download/Standard/CSV/
+@st.cache
+def read_population_data():
+    """ return a dictionary of country name -> population in millions """
+    df = pd.read_csv("countries_pop_2020.csv", index_col=0, header=0, 
+        dtype={'country':str, 'population':np.float64})
+    return df.T.to_dict("records")[0]
 
-# numbers for 2019
-inhabitants = {'Germany': 83.16,
-            'France': 67.2,
-            'United Kingdom': 67.1,
-            'Italy': 60.23,
-            'Spain': 47.05,
-            'Poland': 37.97,
-            'Romania': 19.28,
-            'Netherlands': 17.34,
-            'Belgium': 11.49,
-            'Greece': 10.69,
-            'Sweden': 10.15, 
-            'Switzerland': 8.57,
-            'Austria': 8.91,
-            'Norway': 5.36,
-            'Denmark': 5.77,
-            'Egypt': 97.66,
-            "Algeria":42.55, 
-            "Sudan":40.88, 
-            "Iraq":39.34, 
-            "Morocco":38.8, 
-            "Saudi Arabia":33.41, 
-            "Yemen":28.92, 
-            "Syria":18.28, 
-            "Somalia":15.18, 
-            "Tunisia":11.45, 
-            "Jordan":10.25, 
-            "United Arab Emirates":9.54, 
-            "Lebanon":6.86, 
-            "Libya":6.47, 
-            "Palestine":4.78, 
-            "Oman":4.65, 
-            "Kuwait":4.23, 
-            "Mauritania":3.98, 
-            "Qatar":2.56, 
-            "Bahrain":1.4, 
-            "Djibouti":1.05, 
-            "Comoros":0.85,
-            "California":39.512,
-            "Texas":28.995,
-            "Florida":21.477,
-            "New York":19.453,
-            "Pennsylvania":12.801,
-            "Illinois":12.671,
-            "Ohio":11.689,
-            "Georgia":10.617,
-            "North Carolina":10.488,
-            "Michigan":9.986,
-            "New Jersey":8.882,
-            "Virginia":8.535,
-            "Washington":7.614,
-            "Arizona":7.278,
-            "Massachusetts":6.949,
-            "Tennessee":6.833,
-            "Indiana":6.732,
-            "Missouri":6.137,
-            "Maryland":6.045,
-            "Wisconsin":5.822,
-            "Colorado":5.758,
-            "Minnesota":5.639,
-            "South Carolina":5.148,
-            "Alabama":4.903,
-            "Louisiana":4.648,
-            "Kentucky":4.467,
-            "Oregon":4.217,
-            "Oklahoma":3.956,
-            "Connecticut":3.565,
-            "Utah":3.205,
-            "Iowa":3.155,
-            "Puerto Rico":3.193,
-            "Nevada":3.080,
-            "Arkansas":3.017,
-            "Mississippi":2.976,
-            "Kansas":2.913,
-            "New Mexico":2.096,
-            "Nebraska":1.934,
-            "Idaho":1.792,
-            "West Virginia":1.787,
-            "Hawaii":1.415,
-            "New Hampshire":1.359,
-            "Maine":1.344,
-            "Montana":1.068,
-            "Rhode Island":1.059,
-            "Delaware":0.973,
-            "South Dakota":0.884,
-            "North Dakota":0.762,
-            "Alaska":0.731,
-            "District of Columbia":0.705,
-            "Vermont":0.623,
-            "Wyoming":0.578,
-            "Diamond Princess":0.001,
-            "Guam":0.165,
-            "Virgin Islands":0.104,
-            }
+inhabitants = read_population_data()
 
 @st.cache
 def read_data():
@@ -207,7 +123,7 @@ def main():
         st.sidebar.button("reload")
 
     pages = {
-        "Arab Region + Few More": 1,
+        "Arab Region & Neighboring Countries": 1,
         "US States": 2,
         "Europe": 3
     }
@@ -601,8 +517,11 @@ def arabcountries():
             ℹ️ You can select/ deselect countries and switch between linear and log scales.
             """)
 
+        if st.checkbox("select all"):
+            multiselection = st.multiselect("Select countries:", countries, default=countries)
+        else:
+            multiselection = st.multiselect("Select countries:", countries, default=def_countries)
 
-        multiselection = st.multiselect("Select countries:", countries, default=def_countries)
         logscale = st.checkbox("Log scale", True)
 
         confirmed = confirmed[confirmed["Country/Region"].isin(multiselection)]
