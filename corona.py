@@ -556,7 +556,8 @@ def arabcountries():
 
     countries = ["Algeria", "Bahrain", "Egypt", "Iraq", "Jordan", "Kuwait",
                 "Lebanon", "Morocco", "Mauritania", "Oman", "Qatar", "Saudi Arabia", "Somalia", 
-                "Sudan", "Tunisia", "United Arab Emirates"]
+                "Sudan", "Tunisia", "United Arab Emirates", "Djibouti", "Comores", "Libya", "Palestine", 
+                "Syria", "Yemen"]
 
     #get data
     confirmed, deaths, recovered = read_data()
@@ -577,7 +578,7 @@ def arabcountries():
     recovered = recovered.drop(cols_to_remove, axis=1)
 
     #list of countries 
-    states_list = list(confirmed['Country/Region'].unique()) 
+    countries = list(confirmed['Country/Region'].unique()) 
 
     #keep top 10 states by default 
     sorted_conf = confirmed.sort_values(by=confirmed.columns[-1], ascending=False)
