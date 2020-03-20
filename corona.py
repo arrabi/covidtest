@@ -68,8 +68,6 @@ def read_data_bystate():
     deaths = deaths[deaths['Country/Region'] == "US"]
     recovered = recovered[recovered['Country/Region'] == "US"]
 
-    st.write(confirmed.dtypes)
-
     confirmed = confirmed[~ confirmed['Province/State'].str.contains(",")]
     deaths = deaths[~ deaths['Province/State'].str.contains(",")]
     recovered = recovered[~ recovered['Province/State'].str.contains(",")]
@@ -168,8 +166,7 @@ def usstates():
         st.header("COVID-19 cases and fatality rate in US by state")
         st.markdown("""\
             These are the reported case numbers for a selection of US state"""
-            f""" (currently only {', '.join(countries)}). """
-            """The case fatality rate (CFR) is calculated as:  
+            + """The case fatality rate (CFR) is calculated as:  
             $$
             CFR[\%] = \\frac{fatalities}{\\textit{all cases}}
             $$
