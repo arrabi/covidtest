@@ -22,7 +22,85 @@ inhabitants = {'Germany': 83.16,
             'Switzerland': 8.57,
             'Austria': 8.91,
             'Norway': 5.36,
-            'Denmark': 5.77}
+            'Denmark': 5.77,
+            'Egypt': 97.66,
+            "Algeria":42.55, 
+            "Sudan":40.88, 
+            "Iraq":39.34, 
+            "Morocco":38.8, 
+            "Saudi Arabia":33.41, 
+            "Yemen":28.92, 
+            "Syria":18.28, 
+            "Somalia":15.18, 
+            "Tunisia":11.45, 
+            "Jordan":10.25, 
+            "United Arab Emirates":9.54, 
+            "Lebanon":6.86, 
+            "Libya":6.47, 
+            "Palestine":4.78, 
+            "Oman":4.65, 
+            "Kuwait":4.23, 
+            "Mauritania":3.98, 
+            "Qatar":2.56, 
+            "Bahrain":1.4, 
+            "Djibouti":1.05, 
+            "Comoros":0.85,
+            "California":39.512,
+            "Texas":28.995,
+            "Florida":21.477,
+            "New York":19.453,
+            "Pennsylvania":12.801,
+            "Illinois":12.671,
+            "Ohio":11.689,
+            "Georgia":10.617,
+            "North Carolina":10.488,
+            "Michigan":9.986,
+            "New Jersey":8.882,
+            "Virginia":8.535,
+            "Washington":7.614,
+            "Arizona":7.278,
+            "Massachusetts":6.949,
+            "Tennessee":6.833,
+            "Indiana":6.732,
+            "Missouri":6.137,
+            "Maryland":6.045,
+            "Wisconsin":5.822,
+            "Colorado":5.758,
+            "Minnesota":5.639,
+            "South Carolina":5.148,
+            "Alabama":4.903,
+            "Louisiana":4.648,
+            "Kentucky":4.467,
+            "Oregon":4.217,
+            "Oklahoma":3.956,
+            "Connecticut":3.565,
+            "Utah":3.205,
+            "Iowa":3.155,
+            "Puerto Rico":3.193,
+            "Nevada":3.080,
+            "Arkansas":3.017,
+            "Mississippi":2.976,
+            "Kansas":2.913,
+            "New Mexico":2.096,
+            "Nebraska":1.934,
+            "Idaho":1.792,
+            "West Virginia":1.787,
+            "Hawaii":1.415,
+            "New Hampshire":1.359,
+            "Maine":1.344,
+            "Montana":1.068,
+            "Rhode Island":1.059,
+            "Delaware":0.973,
+            "South Dakota":0.884,
+            "North Dakota":0.762,
+            "Alaska":0.731,
+            "District of Columbia":0.705,
+            "Vermont":0.623,
+            "Wyoming":0.578,
+            "Diamond Princess":0.001,
+            "Guam":0.165,
+            "Virgin Islands":0.104,
+            }
 
 @st.cache
 def read_data():
@@ -72,6 +150,10 @@ def read_data_bystate():
     deaths = deaths[~ deaths['Province/State'].str.contains(",")]
     recovered = recovered[~ recovered['Province/State'].str.contains(",")]
 
+    confirmed = confirmed[~ confirmed['Province/State'].str.contains("Princess")]
+    deaths = deaths[~ deaths['Province/State'].str.contains("Princess")]
+    recovered = recovered[~ recovered['Province/State'].str.contains("Princess")]
+
     # sum over potentially duplicate rows (France and their territories)
     confirmed = confirmed.groupby("Province/State").sum().reset_index()
     deaths = deaths.groupby("Province/State").sum().reset_index()
@@ -116,11 +198,14 @@ def transform2bystate(df, collabel='confirmed'):
     dfm.columns = ["state", collabel]
     return dfm
 
+ISDEBUG = os.path.isfile("__debug__")
 
 def main():
     st.title("Simple Covid-19 Data Explorer")
 
-    st.sidebar.button("reload")
+    if ISDEBUG:
+        st.sidebar.button("reload")
+
     pages = {
         "Arab Region": 1,
         "US States": 2,
@@ -139,8 +224,9 @@ def main():
 
     st.info("""\
           
-        by: Muhammad Arrabi (www.muhammadarrabi.com) |
-        Based on code from [C. Werner](https://www.christianwerner.net) | source: [GitHub](https://www.github.com/cwerner/covid19)
+        by: Muhammad Arrabi (https://twitter.com/mrarrabi) |
+        Source [GitHub](https://github.com/arrabi/covidtest) |
+        Based on code from C. Werner's beautiful project here [GitHub](https://www.github.com/cwerner/covid19)
         | data source: [Johns Hopkins Univerity (GitHub)](https://github.com/CSSEGISandData/COVID-19). 
     """)
 
@@ -157,9 +243,22 @@ def usstates():
 
     confirmed, deaths, recovered = read_data_bystate()
 
+    #keep only dates where there were confirmed cases
+    cols_to_remove = []
+    for c in confirmed.columns:
+        if c[0].isdigit():
+            if confirmed[c].sum() == 0:
+                cols_to_remove += [c]
+    confirmed = confirmed.drop(cols_to_remove, axis=1)
+    deaths = deaths.drop(cols_to_remove, axis=1)
+    recovered = recovered.drop(cols_to_remove, axis=1)
 
-    countries = list(confirmed['Province/State'].unique())
-    
+    #list of states 
+    states_list = list(confirmed['Province/State'].unique()) 
+
+    #keep top 10 states by default + 3 states with high per capita confirmed
+    sorted_conf = confirmed.sort_values(by=confirmed.columns[-1], ascending=False)
+    def_states_list = list(sorted_conf.iloc[0:10,0].unique()) + ['Guam', 'District of Columbia', 'Colorado']
 
     if analysis == "Overview":
 
@@ -171,11 +270,13 @@ def usstates():
             CFR[\%] = \\frac{fatalities}{\\textit{all cases}}
             $$
 
-            ℹ️ You can select/ deselect countries and switch between linear and log scales.
+            ℹ️ You can select/ deselect states and switch between linear and log scales.
             """)
 
-
-        multiselection = st.multiselect("Select countries:", countries, default=countries)
+        if st.checkbox("select all"):
+            multiselection = st.multiselect("Select states:", states_list, default=states_list)
+        else:
+            multiselection = st.multiselect("Select states:", states_list, default=def_states_list)
         logscale = st.checkbox("Log scale", True)
 
         confirmed = confirmed[confirmed["Province/State"].isin(multiselection)]
@@ -206,7 +307,7 @@ def usstates():
         c2 = alt.Chart(confirmed.reset_index()).properties(height=150).mark_line().encode(
             x=alt.X("date:T", title="Date"),
             y=alt.Y("confirmed:Q", title="Cases", scale=SCALE),
-            color=alt.Color('country:N', title="Country")
+            color=alt.Color('state:N', title="State")
         )
 
         # case fatality rate...
@@ -217,7 +318,7 @@ def usstates():
         )
 
         per100k = confirmed.loc[[confirmed.index.max()]].copy()
-        per100k.loc[:,'inhabitants'] = per100k.apply(lambda x: 1, axis=1)
+        per100k.loc[:,'inhabitants'] = per100k.apply(lambda x: inhabitants[x['state']], axis=1)
         per100k.loc[:,'per100k'] = per100k.confirmed / (per100k.inhabitants * 1_000_000) * 100_000
         per100k = per100k.set_index("state")
         per100k = per100k.sort_values(ascending=False, by='per100k')
@@ -240,15 +341,13 @@ def usstates():
 
         st.header("State statistics")
         st.markdown("""\
-            The reported number of active, recovered and deceased COVID-19 cases by country """
-            f""" (currently only {', '.join(countries)}).  
-            """
+            The reported number of active, recovered and deceased COVID-19 cases by state """
             """  
-            ℹ️ You can select countries and plot data as cummulative counts or new active cases per day. 
+            ℹ️ You can select state and plot data as cummulative counts or new active cases per day. 
             """)
 
         # selections
-        selection = st.selectbox("Select state:", countries)
+        selection = st.selectbox("Select state:", states_list)
         cummulative = st.radio("Display type:", ["total", "new cases"])
         #scaletransform = st.radio("Plot y-axis", ["linear", "pow"])
         
@@ -265,9 +364,6 @@ def usstates():
 
         df = pd.concat([confirmed, deaths, recovered], axis=1)
         df["active"] = df.confirmed - df.deaths - df.recovered
-
-        df = df.loc['2020-03-01':]
-        #st.write(df.head())
 
         colors = ["orange", "purple", "gray"]
 
@@ -289,6 +385,9 @@ def usstates():
         )
         st.altair_chart(c, use_container_width=True)
 
+        st.markdown(f"### Data for {selection}")
+        st.write(df)
+
 
 def europe():
     st.markdown("""\
@@ -300,6 +399,23 @@ def europe():
     countries = ["Germany", "Austria", "Belgium", "Denmark", "France", "Greece", "Italy", \
                  "Netherlands", "Norway", "Poland", "Romania", "Spain", "Sweden", \
                  "Switzerland", "United Kingdom"]
+
+    confirmed, deaths, recovered = read_data()
+
+    #keep only arab countries
+    confirmed = confirmed[confirmed['Country/Region'].isin(countries)]
+    deaths = deaths[deaths['Country/Region'].isin(countries)]
+    recovered = recovered[recovered['Country/Region'].isin(countries)]
+
+    #keep only dates where there were confirmed cases
+    cols_to_remove = []
+    for c in confirmed.columns:
+        if c[0].isdigit():
+            if confirmed[c].sum() == 0:
+                cols_to_remove += [c]
+    confirmed = confirmed.drop(cols_to_remove, axis=1)
+    deaths = deaths.drop(cols_to_remove, axis=1)
+    recovered = recovered.drop(cols_to_remove, axis=1)
 
 
     analysis = st.sidebar.selectbox("Choose Analysis", ["Overview", "By Country"])
@@ -318,8 +434,6 @@ def europe():
             ℹ️ You can select/ deselect countries and switch between linear and log scales.
             """)
 
-        confirmed, deaths, recovered = read_data()
-
         multiselection = st.multiselect("Select countries:", countries, default=countries)
         logscale = st.checkbox("Log scale", True)
 
@@ -362,7 +476,7 @@ def europe():
         )
 
         per100k = confirmed.loc[[confirmed.index.max()]].copy()
-        per100k.loc[:,'inhabitants'] = per100k.apply(lambda x: 1, axis=1)
+        per100k.loc[:,'inhabitants'] = per100k.apply(lambda x: inhabitants[x['country']], axis=1)
         per100k.loc[:,'per100k'] = per100k.confirmed / (per100k.inhabitants * 1_000_000) * 100_000
         per100k = per100k.set_index("country")
         per100k = per100k.sort_values(ascending=False, by='per100k')
@@ -379,20 +493,8 @@ def europe():
 
         st.altair_chart(alt.hconcat(c4, alt.vconcat(c2, c3)), use_container_width=True)
 
-        st.markdown(f"""\
-            <div style="font-size: small">
-            ⚠️ Please take the CFR with a grain of salt. The ratio is 
-            highly dependend on the total number of tests conducted in a country. In the early stages
-            of the outbreak often mainly severe cases with clear symptoms are detected. Thus mild cases
-            are not recorded which skews the CFR.
-            </div><br/>  
-
-            """, unsafe_allow_html=True)
-
 
     elif analysis == "By Country":        
-
-        confirmed, deaths, recovered = read_data()
 
         st.header("Country statistics")
         st.markdown("""\
@@ -422,9 +524,6 @@ def europe():
         df = pd.concat([confirmed, deaths, recovered], axis=1)
         df["active"] = df.confirmed - df.deaths - df.recovered
 
-        df = df.loc['2020-03-01':]
-        #st.write(df.head())
-
         colors = ["orange", "purple", "gray"]
 
         value_vars = variables
@@ -444,6 +543,8 @@ def europe():
             color=alt.Color('variable:N', title="Category", scale=SCALE),
         )
         st.altair_chart(c, use_container_width=True)
+        st.markdown(f"### Data for {selection}")
+        st.write(df)
 
 
 def arabcountries():
@@ -453,13 +554,34 @@ def arabcountries():
 
     #st.error("⚠️ There is currently an issue in the datasource of JHU. Data for 03/13 is invalid and thus removed!")
 
-    eucountries = ["Germany", "Austria", "Belgium", "Denmark", "France", "Greece", "Italy", \
-                 "Netherlands", "Norway", "Poland", "Romania", "Spain", "Sweden", \
-                 "Switzerland", "United Kingdom"]
-
     countries = ["Algeria", "Bahrain", "Egypt", "Iraq", "Jordan", "Kuwait",
                 "Lebanon", "Morocco", "Oman", "Qatar", "Saudi Arabia", "Somalia", 
                 "Sudan", "Tunisia", "United Arab Emirates"]
+
+    #get data
+    confirmed, deaths, recovered = read_data()
+
+    #keep only arab countries
+    confirmed = confirmed[confirmed['Country/Region'].isin(countries)]
+    deaths = deaths[deaths['Country/Region'].isin(countries)]
+    recovered = recovered[recovered['Country/Region'].isin(countries)]
+
+    #keep only dates where there were confirmed cases
+    cols_to_remove = []
+    for c in confirmed.columns:
+        if c[0].isdigit():
+            if confirmed[c].sum() == 0:
+                cols_to_remove += [c]
+    confirmed = confirmed.drop(cols_to_remove, axis=1)
+    deaths = deaths.drop(cols_to_remove, axis=1)
+    recovered = recovered.drop(cols_to_remove, axis=1)
+
+    #list of countries 
+    states_list = list(confirmed['Country/Region'].unique()) 
+
+    #keep top 10 states by default 
+    sorted_conf = confirmed.sort_values(by=confirmed.columns[-1], ascending=False)
+    def_countries = list(sorted_conf.iloc[0:10,0].unique()) 
 
     analysis = st.sidebar.selectbox("Choose Analysis", ["Overview", "By Country"])
 
@@ -477,9 +599,8 @@ def arabcountries():
             ℹ️ You can select/ deselect countries and switch between linear and log scales.
             """)
 
-        confirmed, deaths, recovered = read_data()
 
-        multiselection = st.multiselect("Select countries:", countries, default=countries)
+        multiselection = st.multiselect("Select countries:", countries, default=def_countries)
         logscale = st.checkbox("Log scale", True)
 
         confirmed = confirmed[confirmed["Country/Region"].isin(multiselection)]
@@ -521,7 +642,7 @@ def arabcountries():
         )
 
         per100k = confirmed.loc[[confirmed.index.max()]].copy()
-        per100k.loc[:,'inhabitants'] = per100k.apply(lambda x: 1, axis=1)
+        per100k.loc[:,'inhabitants'] = per100k.apply(lambda x: inhabitants[x['country']], axis=1)
         per100k.loc[:,'per100k'] = per100k.confirmed / (per100k.inhabitants * 1_000_000) * 100_000
         per100k = per100k.set_index("country")
         per100k = per100k.sort_values(ascending=False, by='per100k')
@@ -538,20 +659,8 @@ def arabcountries():
 
         st.altair_chart(alt.hconcat(c4, alt.vconcat(c2, c3)), use_container_width=True)
 
-        st.markdown(f"""\
-            <div style="font-size: small">
-            ⚠️ Please take the CFR with a grain of salt. The ratio is 
-            highly dependend on the total number of tests conducted in a country. In the early stages
-            of the outbreak often mainly severe cases with clear symptoms are detected. Thus mild cases
-            are not recorded which skews the CFR.
-            </div><br/>  
-
-            """, unsafe_allow_html=True)
-
 
     elif analysis == "By Country":        
-
-        confirmed, deaths, recovered = read_data()
 
         st.header("Country statistics")
         st.markdown("""\
@@ -581,8 +690,6 @@ def arabcountries():
         df = pd.concat([confirmed, deaths, recovered], axis=1)
         df["active"] = df.confirmed - df.deaths - df.recovered
 
-        df = df.loc['2020-03-01':]
-        #st.write(df.head())
 
         colors = ["orange", "purple", "gray"]
 
@@ -603,6 +710,8 @@ def arabcountries():
             color=alt.Color('variable:N', title="Category", scale=SCALE),
         )
         st.altair_chart(c, use_container_width=True)
+        st.markdown(f"### Data for {selection}")
+        st.write(df)
 
 
 if __name__ == "__main__":
