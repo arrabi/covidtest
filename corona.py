@@ -7,7 +7,7 @@ import os
 import numpy as np
  
 
-APP_LOG_FILE = f"eval_logger_{os.path.basename(__file__)}.log"
+APP_LOG_FILE = f"log_{os.path.basename(__file__)}.log"
 def log(ss):
     with open (file=APP_LOG_FILE, mode="a+") as f:
         f.write(str(datetime.datetime.now()) + ": " + ss + "\n")
@@ -669,7 +669,7 @@ def arabcountries():
 
 def get_pop(country):
     try:
-        return inhabitants[x['country']]
+        return inhabitants[country]
     except:
         log(f"Can't get pop of {country}, assuming 1m")
         return 1
@@ -769,7 +769,7 @@ def generalList(title, countries, unit_name="Country", unit_plural="Countries",
         )
 
         per100k = confirmed.loc[[confirmed.index.max()]].copy()
-        per100k.loc[:,'inhabitants'] = per100k.apply(lambda x: get_pop(x), axis=1)
+        per100k.loc[:,'inhabitants'] = per100k.apply(lambda x: get_pop(x['country']), axis=1)
         per100k.loc[:,'per100k'] = per100k.confirmed / (per100k.inhabitants * 1_000_000) * 100_000
         per100k = per100k.set_index("country")
         per100k = per100k.sort_values(ascending=False, by='per100k')
