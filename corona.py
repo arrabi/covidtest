@@ -136,10 +136,11 @@ def main():
         st.sidebar.button("reload")
 
     pages = {
-        "Arab Region & Neighboring Countries": 1,
+        "MiddleEast & North Africa": 1,
+        "South Asia & Neighbors":5,
         "US States": 2,
         "Europe": 3,
-        "World": 4
+        "World": 4,
     }
     chosen = st.sidebar.radio("Select page", list(pages.keys()), index=0)
     chosen = pages[chosen]
@@ -149,8 +150,8 @@ def main():
             "Lebanon", "Morocco", "Mauritania", "Oman", "Qatar", "Saudi Arabia", "Somalia", 
             "Sudan", "Tunisia", "United Arab Emirates", "Djibouti", "Comores", "Libya", "Palestine", 
             "Syria", "Yemen", "Iran", "Turkey", "Greece", "Cypress", "Ethiopia", "Eritrea", "South Sudan",
-            "Chad", "Niger", "Mali", "Senegal", "Malta"]
-        generalList(title="Arab Region and Neighbors", countries=arab_countries)
+            "Chad", "Niger", "Mali", "Senegal", "Malta", "Cote d'Ivoire"]
+        generalList(title="MENA Region", countries=arab_countries)
     elif chosen == 2: 
         usstates()
     elif chosen == 3: 
@@ -163,6 +164,11 @@ def main():
         confirmed, _, _ = read_data()
         all_countries = list(confirmed['Country/Region'].unique()) 
         generalList(title="World", countries=all_countries)
+    elif chosen == 5:
+#        arabcountries()
+        sa_countries = ["India", "Pakistan", "Bangladesh", "Afghanistan", "Tajikistan", "Nepal", 
+            "Bhutan", "Myanmar", "Laos"]
+        generalList(title="South Asia & Neighbors", countries=sa_countries)
     else:
         st.write("not implemented yet")
 
