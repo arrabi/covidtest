@@ -682,8 +682,8 @@ def get_pop(country):
 
 def generalList(title, countries, unit_name="Country", unit_plural="Countries", 
         column_name ="Country/Region", num_def_selected = 10):
-    st.markdown("""\
-        This app illustrates the spread of COVID-19 in Arab Region (where data is available) over time.
+    st.markdown(f"""\
+        This app illustrates the spread of COVID-19 in {title} (where data is available) over time.
     """)
 
     #st.error("⚠️ There is currently an issue in the datasource of JHU. Data for 03/13 is invalid and thus removed!")
