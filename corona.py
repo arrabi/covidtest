@@ -16,13 +16,15 @@ def log(ss):
 # get countries populations from csv file, and cache it.
 # csv file obtained from UN: population.un.org/wpp/Download/Standard/CSV/
 @st.cache
-def read_population_data():
+def read_population_data(parent="World"):
     """ return a dictionary of country name -> population in millions """
     df = pd.read_csv("countries_pop_2020.csv", index_col=0, header=0, 
-        dtype={'country':str, 'population':np.float64})
+        dtype={'country':str, 'population':np.float64, 'parent':str})
+    df = df[df['parent'] == parent]
     return df.T.to_dict("records")[0]
 
 inhabitants = read_population_data()
+inhabitants_us = read_population_data(parent="US")
 
 @st.cache
 def read_data():
@@ -270,7 +272,7 @@ def usstates():
         )
 
         per100k = confirmed.loc[[confirmed.index.max()]].copy()
-        per100k.loc[:,'inhabitants'] = per100k.apply(lambda x: inhabitants[x['state']], axis=1)
+        per100k.loc[:,'inhabitants'] = per100k.apply(lambda x: inhabitants_us[x['state']], axis=1)
         per100k.loc[:,'per100k'] = per100k.confirmed / (per100k.inhabitants * 1_000_000) * 100_000
         per100k = per100k.set_index("state")
         per100k = per100k.sort_values(ascending=False, by='per100k')

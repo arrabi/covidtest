@@ -1,291 +1,288 @@
-﻿country,population
-Afghanistan,38.928341
-Alabama,4.903
-Alaska,0.731
-Albania,2.8778
-Algeria,43.851043
-American Samoa,0.055197
-Andorra,0.077265
-Angola,32.866268
-Anguilla,0.015002
-Antigua and Barbuda,0.097928
-Argentina,45.195777
-Arizona,7.278
-Arkansas,3.017
-Armenia,2.963234
-Aruba,0.106766
-Australia,25.499881
-Austria,9.0064
-Azerbaijan,10.139175
-"Bahamas, The",0.393248
-Bahrain,1.701583
-Bangladesh,164.689383
-Barbados,0.287371
-Belarus,9.449321
-Belgium,11.589616
-Belize,0.397621
-Benin,12.123198
-Bermuda,0.062273
-Bhutan,0.771612
-Bolivia,11.673029
-"Bonaire, Sint Eustatius and Saba",0.026221
-Bosnia and Herzegovina,3.280815
-Botswana,2.351625
-Brazil,212.559409
-British Virgin Islands,0.030237
-Brunei Darussalam,0.437483
-Bulgaria,6.948445
-Burkina Faso,20.903278
-Burundi,11.890781
-Cabo Verde,0.555988
-California,39.512
-Cambodia,16.718971
-Cameroon,26.545864
-Canada,37.742157
-Cayman Islands,0.06572
-Central African Republic,4.829764
-Chad,16.425859
-Channel Islands,0.173859
-Chile,19.116209
-China,1439.323774
-"China, Hong Kong SAR",7.496988
-"China, Macao SAR",0.649342
-Colombia,50.882884
-Colorado,5.758
-Comoros,0.869595
-Congo (Brazzaville),5.518092
-Congo (Kinshasa),89.561404
-Connecticut,3.565
-Cook Islands,0.017564
-Costa Rica,5.094114
-Cote d'Ivoire,26.378275
-Croatia,4.105268
-Cuba,11.326616
-Curaçao,0.1641
-Cyprus,1.207361
-Czechia,10.708982
-Delaware,0.973
-Denmark,5.792203
-Diamond Princess,0.001
-District of Columbia,0.705
-Djibouti,0.988002
-Dominica,0.071991
-Dominican Republic,10.847904
-Ecuador,17.64306
-Egypt,102.334403
-El Salvador,6.486201
-Equatorial Guinea,1.402985
-Eritrea,3.546427
-Estonia,1.326539
-Eswatini,1.160164
-Ethiopia,114.963583
-Falkland Islands,0.003483
-Faroe Islands,0.048865
-Fiji,0.896444
-Finland,5.540718
-Florida,21.477
-France,65.273512
-French Guiana,0.298682
-French Polynesia,0.280904
-Gabon,2.225728
-Gambia,2.416664
-Georgia,3.989175
-Georgia,10.617
-Germany,83.783945
-Ghana,31.072945
-Gibraltar,0.033691
-Greece,10.423056
-Greenland,0.056772
-Grenada,0.112519
-Guadeloupe,0.400127
-Guam,0.168783
-Guam,0.165
-Guatemala,17.915567
-Guinea,13.132792
-Guinea-Bissau,1.967998
-Guyana,0.786559
-Haiti,11.402533
-Hawaii,1.415
-Holy See,0.000809
-Honduras,9.904608
-Hungary,9.66035
-Iceland,0.34125
-Idaho,1.792
-Illinois,12.671
-India,1380.004385
-Indiana,6.732
-Indonesia,273.523621
-Iowa,3.155
-Iran,83.992953
-Iraq,40.222503
-Ireland,4.937796
-Isle of Man,0.085032
-Israel,8.655541
-Italy,60.461828
-Jamaica,2.961161
-Japan,126.476458
-Jordan,10.20314
-Kansas,2.913
-Kazakhstan,18.776707
-Kentucky,4.467
-Kenya,53.7713
-Kiribati,0.119446
-"Korea, North",25.778815
-"Korea, South",51.269183
-Kuwait,4.270563
-Kyrgyzstan,6.524191
-Lao,7.275556
-Latvia,1.886202
-Lebanon,6.825442
-Lesotho,2.142252
-Liberia,5.057677
-Libya,6.871287
-Liechtenstein,0.038137
-Lithuania,2.722291
-Louisiana,4.648
-Luxembourg,0.625976
-Madagascar,27.691019
-Maine,1.344
-Malawi,19.129955
-Malaysia,32.365998
-Maldives,0.540542
-Mali,20.250834
-Malta,0.441539
-Marshall Islands,0.059194
-Martinique,0.375265
-Maryland,6.045
-Massachusetts,6.949
-Mauritania,4.64966
-Mauritius,1.271767
-Mayotte,0.272813
-Mexico,128.932753
-Michigan,9.986
-Micronesia,0.115021
-Minnesota,5.639
-Mississippi,2.976
-Missouri,6.137
-Monaco,0.039244
-Mongolia,3.278292
-Montana,1.068
-Montenegro,0.628062
-Montserrat,0.004999
-Morocco,36.910558
-Mozambique,31.255435
-Myanmar,54.409794
-Namibia,2.540916
-Nauru,0.010834
-Nebraska,1.934
-Nepal,29.136808
-Netherlands,17.134873
-Nevada,3.08
-New Caledonia,0.285491
-New Hampshire,1.359
-New Jersey,8.882
-New Mexico,2.096
-New York,19.453
-New Zealand,4.822233
-Nicaragua,6.624554
-Niger,24.206636
-Nigeria,206.139587
-Niue,0.001618
-North Carolina,10.488
-North Dakota,0.762
-North Macedonia,2.08338
-Northern Mariana Islands,0.057557
-Norway,5.421242
-Ohio,11.689
-Oklahoma,3.956
-Oman,5.106622
-Oregon,4.217
-Pakistan,220.892331
-Palau,0.018092
-Palestine,5.101416
-Panama,4.314768
-Papua New Guinea,8.947027
-Paraguay,7.13253
-Pennsylvania,12.801
-Peru,32.971846
-Philippines,109.581085
-Poland,37.846605
-Portugal,10.196707
-Puerto Rico,2.86084
-Puerto Rico,3.193
-Qatar,2.88106
-Republic of Moldova,4.033963
-Réunion,0.895308
-Rhode Island,1.059
-Romania,19.237682
-Russian Federation,145.93446
-Rwanda,12.952209
-Saint Barthélemy,0.009885
-Saint Helena,0.006071
-Saint Kitts and Nevis,0.053192
-Saint Lucia,0.183629
-Saint Martin (French part),0.038659
-Saint Pierre and Miquelon,0.005795
-Saint Vincent and the Grenadines,0.110947
-Samoa,0.19841
-San Marino,0.033938
-Sao Tome and Principe,0.219161
-Saudi Arabia,34.813867
-Senegal,16.74393
-Serbia,8.73737
-Seychelles,0.09834
-Sierra Leone,7.976985
-Singapore,5.850343
-Sint Maarten (Dutch part),0.042882
-Slovakia,5.459643
-Slovenia,2.078932
-Solomon Islands,0.686878
-Somalia,15.893219
-South Africa,59.30869
-South Carolina,5.148
-South Dakota,0.884
-South Sudan,11.193729
-Spain,46.754783
-Sri Lanka,21.41325
-Sudan,43.849269
-Suriname,0.586634
-Sweden,10.09927
-Switzerland,8.654618
-Syria,17.500657
-Taiwan,23.816775
-Tajikistan,9.537642
-Tanzania,59.734213
-Tennessee,6.833
-Texas,28.995
-Thailand,69.799978
-Timor-Leste,1.318442
-Togo,8.278737
-Tokelau,0.00135
-Tonga,0.105697
-Trinidad and Tobago,1.399491
-Tunisia,11.818618
-Turkey,84.339067
-Turkmenistan,6.031187
-Turks and Caicos Islands,0.038718
-Tuvalu,0.011792
-Uganda,45.741
-Ukraine,43.733759
-United Arab Emirates,9.8904
-United Kingdom,67.886004
-Uruguay,3.473727
-US,331.002647
-Utah,3.205
-Uzbekistan,33.469199
-Vanuatu,0.30715
-Venezuela,28.435943
-Vermont,0.623
-Viet Nam,97.338583
-Virgin Islands,0.104423
-Virgin Islands,0.104
-Virginia,8.535
-Wallis and Futuna Islands,0.011246
-Washington,7.614
-West Virginia,1.787
-Western Sahara,0.59733
-Wisconsin,5.822
-Wyoming,0.578
-Yemen,29.825968
-Zambia,18.383956
-Zimbabwe,14.862927
+﻿country,population,parent
+China,1439.323774,World
+India,1380.004385,World
+US,331.002647,World
+Indonesia,273.523621,World
+Pakistan,220.892331,World
+Brazil,212.559409,World
+Nigeria,206.139587,World
+Bangladesh,164.689383,World
+Russian Federation,145.93446,World
+Mexico,128.932753,World
+Japan,126.476458,World
+Ethiopia,114.963583,World
+Philippines,109.581085,World
+Egypt,102.334403,World
+Viet Nam,97.338583,World
+Congo (Kinshasa),89.561404,World
+Turkey,84.339067,World
+Iran,83.992953,World
+Germany,83.783945,World
+Thailand,69.799978,World
+United Kingdom,67.886004,World
+France,65.273512,World
+Italy,60.461828,World
+Tanzania,59.734213,World
+South Africa,59.30869,World
+Myanmar,54.409794,World
+Kenya,53.7713,World
+"Korea, South",51.269183,World
+Colombia,50.882884,World
+Spain,46.754783,World
+Uganda,45.741,World
+Argentina,45.195777,World
+Algeria,43.851043,World
+Sudan,43.849269,World
+Ukraine,43.733759,World
+Iraq,40.222503,World
+California,39.512,US
+Afghanistan,38.928341,World
+Poland,37.846605,World
+Canada,37.742157,World
+Morocco,36.910558,World
+Saudi Arabia,34.813867,World
+Uzbekistan,33.469199,World
+Peru,32.971846,World
+Angola,32.866268,World
+Malaysia,32.365998,World
+Mozambique,31.255435,World
+Ghana,31.072945,World
+Yemen,29.825968,World
+Nepal,29.136808,World
+Texas,28.995,US
+Venezuela,28.435943,World
+Madagascar,27.691019,World
+Cameroon,26.545864,World
+Cote d'Ivoire,26.378275,World
+"Korea, North",25.778815,World
+Australia,25.499881,World
+Niger,24.206636,World
+Taiwan,23.816775,World
+Florida,21.477,US
+Sri Lanka,21.41325,World
+Burkina Faso,20.903278,World
+Mali,20.250834,World
+New York,19.453,US
+Romania,19.237682,World
+Malawi,19.129955,World
+Chile,19.116209,World
+Kazakhstan,18.776707,World
+Zambia,18.383956,World
+Guatemala,17.915567,World
+Ecuador,17.64306,World
+Syria,17.500657,World
+Netherlands,17.134873,World
+Senegal,16.74393,World
+Cambodia,16.718971,World
+Chad,16.425859,World
+Somalia,15.893219,World
+Zimbabwe,14.862927,World
+Guinea,13.132792,World
+Rwanda,12.952209,World
+Pennsylvania,12.801,US
+Illinois,12.671,US
+Benin,12.123198,World
+Burundi,11.890781,World
+Tunisia,11.818618,World
+Ohio,11.689,US
+Bolivia,11.673029,World
+Belgium,11.589616,World
+Haiti,11.402533,World
+Cuba,11.326616,World
+South Sudan,11.193729,World
+Dominican Republic,10.847904,World
+Czechia,10.708982,World
+Georgia,10.617,US
+North Carolina,10.488,US
+Greece,10.423056,World
+Jordan,10.20314,World
+Portugal,10.196707,World
+Azerbaijan,10.139175,World
+Sweden,10.09927,World
+Michigan,9.986,US
+Honduras,9.904608,World
+United Arab Emirates,9.8904,World
+Hungary,9.66035,World
+Tajikistan,9.537642,World
+Belarus,9.449321,World
+Austria,9.0064,World
+Papua New Guinea,8.947027,World
+New Jersey,8.882,US
+Serbia,8.73737,World
+Israel,8.655541,World
+Switzerland,8.654618,World
+Virginia,8.535,US
+Togo,8.278737,World
+Sierra Leone,7.976985,World
+Washington,7.614,US
+"China, Hong Kong SAR",7.496988,World
+Arizona,7.278,US
+Lao,7.275556,World
+Paraguay,7.13253,World
+Massachusetts,6.949,US
+Bulgaria,6.948445,World
+Libya,6.871287,World
+Tennessee,6.833,US
+Lebanon,6.825442,World
+Indiana,6.732,US
+Nicaragua,6.624554,World
+Kyrgyzstan,6.524191,World
+El Salvador,6.486201,World
+Missouri,6.137,US
+Maryland,6.045,US
+Turkmenistan,6.031187,World
+Singapore,5.850343,World
+Wisconsin,5.822,US
+Denmark,5.792203,World
+Colorado,5.758,US
+Minnesota,5.639,US
+Finland,5.540718,World
+Congo (Brazzaville),5.518092,World
+Slovakia,5.459643,World
+Norway,5.421242,World
+South Carolina,5.148,US
+Oman,5.106622,World
+Palestine,5.101416,World
+Costa Rica,5.094114,World
+Liberia,5.057677,World
+Ireland,4.937796,World
+Alabama,4.903,US
+Central African Republic,4.829764,World
+New Zealand,4.822233,World
+Mauritania,4.64966,World
+Louisiana,4.648,US
+Kentucky,4.467,US
+Panama,4.314768,World
+Kuwait,4.270563,World
+Oregon,4.217,US
+Croatia,4.105268,World
+Republic of Moldova,4.033963,World
+Georgia,3.989175,World
+Oklahoma,3.956,US
+Connecticut,3.565,US
+Eritrea,3.546427,World
+Uruguay,3.473727,World
+Bosnia and Herzegovina,3.280815,World
+Mongolia,3.278292,World
+Utah,3.205,US
+Iowa,3.155,US
+Nevada,3.08,US
+Arkansas,3.017,US
+Mississippi,2.976,US
+Armenia,2.963234,World
+Jamaica,2.961161,World
+Kansas,2.913,US
+Qatar,2.88106,World
+Albania,2.8778,World
+Puerto Rico,2.86084,US
+Lithuania,2.722291,World
+Namibia,2.540916,World
+Gambia,2.416664,World
+Botswana,2.351625,World
+Gabon,2.225728,World
+Lesotho,2.142252,World
+New Mexico,2.096,US
+North Macedonia,2.08338,World
+Slovenia,2.078932,World
+Guinea-Bissau,1.967998,World
+Nebraska,1.934,US
+Latvia,1.886202,World
+Idaho,1.792,US
+West Virginia,1.787,US
+Bahrain,1.701583,World
+Hawaii,1.415,US
+Equatorial Guinea,1.402985,World
+Trinidad and Tobago,1.399491,World
+New Hampshire,1.359,US
+Maine,1.344,US
+Estonia,1.326539,World
+Timor-Leste,1.318442,World
+Mauritius,1.271767,World
+Cyprus,1.207361,World
+Eswatini,1.160164,World
+Montana,1.068,US
+Rhode Island,1.059,US
+Djibouti,0.988002,World
+Delaware,0.973,US
+Fiji,0.896444,World
+Réunion,0.895308,World
+South Dakota,0.884,US
+Comoros,0.869595,World
+Guyana,0.786559,World
+Bhutan,0.771612,World
+North Dakota,0.762,US
+Alaska,0.731,US
+District of Columbia,0.705,US
+Solomon Islands,0.686878,World
+"China, Macao SAR",0.649342,World
+Montenegro,0.628062,World
+Luxembourg,0.625976,World
+Vermont,0.623,US
+Western Sahara,0.59733,World
+Suriname,0.586634,World
+Wyoming,0.578,US
+Cabo Verde,0.555988,World
+Maldives,0.540542,World
+Malta,0.441539,World
+Brunei Darussalam,0.437483,World
+Guadeloupe,0.400127,World
+Belize,0.397621,World
+"Bahamas, The",0.393248,World
+Martinique,0.375265,World
+Iceland,0.34125,World
+Vanuatu,0.30715,World
+French Guiana,0.298682,World
+Barbados,0.287371,World
+New Caledonia,0.285491,World
+French Polynesia,0.280904,World
+Mayotte,0.272813,World
+Sao Tome and Principe,0.219161,World
+Samoa,0.19841,World
+Saint Lucia,0.183629,World
+Channel Islands,0.173859,World
+Guam,0.168783,US
+Curaçao,0.1641,World
+Kiribati,0.119446,World
+Micronesia,0.115021,World
+Grenada,0.112519,World
+Saint Vincent and the Grenadines,0.110947,World
+Aruba,0.106766,World
+Tonga,0.105697,World
+Virgin Islands,0.104423,US
+Seychelles,0.09834,World
+Antigua and Barbuda,0.097928,World
+Isle of Man,0.085032,World
+Andorra,0.077265,World
+Dominica,0.071991,World
+Cayman Islands,0.06572,World
+Bermuda,0.062273,World
+Marshall Islands,0.059194,World
+Northern Mariana Islands,0.057557,World
+Greenland,0.056772,World
+American Samoa,0.055197,US
+Saint Kitts and Nevis,0.053192,World
+Faroe Islands,0.048865,World
+Sint Maarten (Dutch part),0.042882,World
+Monaco,0.039244,World
+Turks and Caicos Islands,0.038718,World
+Saint Martin (French part),0.038659,World
+Liechtenstein,0.038137,World
+San Marino,0.033938,World
+Gibraltar,0.033691,World
+British Virgin Islands,0.030237,World
+"Bonaire, Sint Eustatius and Saba",0.026221,World
+Palau,0.018092,World
+Cook Islands,0.017564,World
+Anguilla,0.015002,World
+Tuvalu,0.011792,World
+Wallis and Futuna Islands,0.011246,World
+Nauru,0.010834,World
+Saint Barthélemy,0.009885,World
+Saint Helena,0.006071,World
+Saint Pierre and Miquelon,0.005795,World
+Montserrat,0.004999,World
+Falkland Islands,0.003483,World
+Niue,0.001618,World
+Tokelau,0.00135,World
+Diamond Princess,0.001,US
+Holy See,0.000809,World
