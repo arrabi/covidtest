@@ -848,8 +848,23 @@ def generalList(title, countries, unit_name="Country", unit_plural="Countries",
         st.markdown(f"### Data for {selection}")
         st.write(df)
 
-
+import traceback
 
 if __name__ == "__main__":
-    main()
+    retry = 0
+    while retry < 3:
+        try:
+            main()
+            break
+        except Exception as e:
+            log(f"Exception: {type(e)}")
+            log(str(e))
+            log(str(e.args))      # arguments stored in .args
+            log(str(vars(e)))
+            log(''.join(traceback.format_stack()))
+            retry += 1
+            log(f"#### Restarting, retry: {retry} ####")
+    if retry >= 3:
+        st.write("Server error, please visit the site later.")
+        log(f"#### Giving Up - quitting, retry: {retry} ####")
 
