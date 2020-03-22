@@ -243,6 +243,8 @@ def usstates():
 
         frate = confirmed[["state"]]
         frate["frate"] = (deaths.deaths / confirmed.confirmed)*100
+        frate["deaths"] = deaths.deaths
+        frate["confirmed"] = confirmed.confirmed
 
         # saveguard for empty selection 
         if len(multiselection) == 0:
@@ -269,7 +271,11 @@ def usstates():
         c3 = alt.Chart(frate.reset_index()).properties(height=100).mark_line().encode(
             x=alt.X("date:T", title="Date"),
             y=alt.Y("frate:Q", title="Fatality rate [%]", scale=alt.Scale(type='linear')),
-            color=alt.Color('state:N', title="State")
+            color=alt.Color('state:N', title="State"),
+            tooltip=[alt.Tooltip('state:N', title='State'), 
+                     alt.Tooltip('frate:Q', title='Fatality rate'),
+                     alt.Tooltip('deaths:Q', title='Total deaths'),
+                     alt.Tooltip('confirmed:Q', title='Total cases')]
         )
 
         per100k = confirmed.loc[[confirmed.index.max()]].copy()
@@ -752,6 +758,8 @@ def generalList(title, countries, unit_name="Country", unit_plural="Countries",
 
         frate = confirmed[["country"]]
         frate["frate"] = (deaths.deaths / confirmed.confirmed)*100
+        frate["deaths"] = deaths.deaths
+        frate["confirmed"] = confirmed.confirmed
 
         # saveguard for empty selection 
         if len(multiselection) == 0:
@@ -779,7 +787,11 @@ def generalList(title, countries, unit_name="Country", unit_plural="Countries",
         c3 = alt.Chart(frate.reset_index()).properties(height=100).mark_line().encode(
             x=alt.X("date:T", title="Date"),
             y=alt.Y("frate:Q", title="Fatality rate [%]", scale=alt.Scale(type='linear')),
-            color=alt.Color('country:N', title="Country")
+            color=alt.Color('country:N', title="Country"),
+            tooltip=[alt.Tooltip('country:N', title='Country'), 
+                     alt.Tooltip('frate:Q', title='Fatality rate'),
+                     alt.Tooltip('deaths:Q', title='Total deaths'),
+                     alt.Tooltip('confirmed:Q', title='Total cases')]
         )
 
         per100k = confirmed.loc[[confirmed.index.max()]].copy()
