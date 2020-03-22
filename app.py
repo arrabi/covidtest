@@ -770,7 +770,9 @@ def generalList(title, countries, unit_name="Country", unit_plural="Countries",
         c2 = alt.Chart(confirmed.reset_index()).properties(height=150).mark_line().encode(
             x=alt.X("date:T", title="Date"),
             y=alt.Y("confirmed:Q", title="Cases", scale=SCALE),
-            color=alt.Color('country:N', title="Country")
+            color=alt.Color('country:N', title="Country"),
+            tooltip=[alt.Tooltip('country:N', title='Country'), 
+                     alt.Tooltip('confirmed:Q', title='Total cases')]
         )
 
         # case fatality rate...
@@ -783,6 +785,7 @@ def generalList(title, countries, unit_name="Country", unit_plural="Countries",
         per100k = confirmed.loc[[confirmed.index.max()]].copy()
         per100k.loc[:,'inhabitants'] = per100k.apply(lambda x: get_pop(x['country']), axis=1)
         per100k.loc[:,'per100k'] = per100k.confirmed / (per100k.inhabitants * 1_000_000) * 100_000
+        per100k.loc[:,'totalc'] = round(per100k.confirmed,0)
         per100k = per100k.set_index("country")
         per100k = per100k.sort_values(ascending=False, by='per100k')
         per100k.loc[:,'per100k'] = per100k.per100k.round(2)
@@ -793,7 +796,8 @@ def generalList(title, countries, unit_name="Country", unit_plural="Countries",
             color=alt.Color('country:N', title="Country"),
             tooltip=[alt.Tooltip('country:N', title='Country'), 
                      alt.Tooltip('per100k:Q', title='Cases per 100k'),
-                     alt.Tooltip('inhabitants:Q', title='Inhabitants [mio]')]
+                     alt.Tooltip('inhabitants:Q', title='Inhabitants [mio]'),
+                     alt.Tooltip('totalc:Q', title='Total Cases')]
         )
 
         st.altair_chart(alt.hconcat(c4, alt.vconcat(c2, c3)), use_container_width=True)
@@ -847,6 +851,7 @@ def generalList(title, countries, unit_name="Country", unit_plural="Countries",
             x=alt.X("date:T", title="Date"),
             y=alt.Y("value:Q", title="Cases", scale=alt.Scale(type='linear')),
             color=alt.Color('variable:N', title="Category", scale=SCALE),
+            tooltip=[alt.Tooltip('value:Q', title='Value')]
         )
         st.altair_chart(c, use_container_width=True)
         st.markdown(f"### Data for {selection}")
