@@ -274,6 +274,7 @@ def usstates():
         per100k = confirmed.loc[[confirmed.index.max()]].copy()
         per100k.loc[:,'inhabitants'] = per100k.apply(lambda x: inhabitants_us[x['state']], axis=1)
         per100k.loc[:,'per100k'] = per100k.confirmed / (per100k.inhabitants * 1_000_000) * 100_000
+        per100k.loc[:,'totalc'] = round(per100k.confirmed,0)
         per100k = per100k.set_index("state")
         per100k = per100k.sort_values(ascending=False, by='per100k')
         per100k.loc[:,'per100k'] = per100k.per100k.round(2)
@@ -284,7 +285,8 @@ def usstates():
             color=alt.Color('state:N', title="State"),
             tooltip=[alt.Tooltip('state:N', title='State'), 
                      alt.Tooltip('per100k:Q', title='Cases per 100k'),
-                     alt.Tooltip('inhabitants:Q', title='Inhabitants [mio]')]
+                     alt.Tooltip('inhabitants:Q', title='Inhabitants [mio]'),
+                     alt.Tooltip('totalc:Q', title='Total cases')]
         )
 
         st.altair_chart(alt.hconcat(c4, alt.vconcat(c2, c3)), use_container_width=True)
@@ -864,6 +866,8 @@ if __name__ == "__main__":
             log(''.join(traceback.format_stack()))
             retry += 1
             log(f"#### Restarting, retry: {retry} ####")
+            if ISDEBUG:
+                raise e
     if retry >= 3:
         st.write("Server error, please visit the site later.")
         log(f"#### Giving Up - quitting, retry: {retry} ####")
