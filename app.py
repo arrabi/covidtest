@@ -757,10 +757,21 @@ def generalList(title, countries, unit_name="Country", unit_plural="Countries",
         deaths = deaths.drop(["Lat", "Long"],axis=1)
         deaths = transform2(deaths, collabel="deaths")
 
+        #date filter
+        startDate = st.sidebar.date_input("Start date", value=confirmed.index.min())
+        endDate = st.sidebar.date_input("Start date", value=confirmed.index.max())
+        # convert date to datetime for comparison purposes
+        startDate = datetime.datetime(startDate.year, startDate.month, startDate.day)
+        endDate = datetime.datetime(endDate.year, endDate.month, endDate.day)
+        # filter DB
+        confirmed = confirmed.loc[startDate : endDate] #.reset_index()
+        deaths = deaths.loc[startDate : endDate] #.reset_index()
+
         frate = confirmed[["country"]]
         frate["frate"] = (deaths.deaths / confirmed.confirmed)*100
         frate["deaths"] = deaths.deaths
         frate["confirmed"] = confirmed.confirmed
+
 
         # saveguard for empty selection 
         if len(multiselection) == 0:
