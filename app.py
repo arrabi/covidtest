@@ -257,11 +257,12 @@ def usstates():
             
             SCALE = alt.Scale(type='log', domain=[10, int(max(confirmed.confirmed))], clamp=True)
 
-
         c2 = alt.Chart(confirmed.reset_index()).properties(height=150).mark_line().encode(
             x=alt.X("date:T", title="Date"),
             y=alt.Y("confirmed:Q", title="Cases", scale=SCALE),
-            color=alt.Color('state:N', title="State")
+            color=alt.Color('state:N', title="State"),
+            tooltip=[alt.Tooltip('state:N', title='State'), 
+                     alt.Tooltip('confirmed:Q', title='Total cases')]
         )
 
         # case fatality rate...
@@ -339,6 +340,7 @@ def usstates():
             x=alt.X("date:T", title="Date"),
             y=alt.Y("value:Q", title="Cases", scale=alt.Scale(type='linear')),
             color=alt.Color('variable:N', title="Category", scale=SCALE),
+            tooltip=[alt.Tooltip('value:Q', title='Value')]
         )
         st.altair_chart(c, use_container_width=True)
 
