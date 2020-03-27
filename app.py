@@ -884,6 +884,9 @@ def generalList(title, countries, unit_name="Country", unit_plural="Countries",
 import traceback
 
 if __name__ == "__main__":
+    main()
+
+if __name__ == "__main__1":
     retry = 0
     while retry < 3:
         try:
